@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %}About - MisinfoDetector{% endblock %}
+{% block content %}
+
+<style>
+    * {
+        color: rgb(0, 0, 0);
+        font-size: large;
+    }
+
+    .glass-box {
+        background: rgb(255, 255, 255);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 30px;
+        margin-bottom: 40px;
+    }
+
+    .about-image {
+        width: 100%;
+        border-radius: 15px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    h2 {
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+</style>
+<div class="container mt-4">
+
+    <h2 class="animate__animated animate__fadeInLeft text-center">About MisinfoDetector</h2>
+
+    <!-- Section 1 -->
+    <div class="row glass-box align-items-center">
+        <div class="col-md-6">
+            <p class="mb-0">🧠 <strong>What is MisinfoDetector?</strong><br>
+                In an age dominated by digital information, it's becoming increasingly difficult to distinguish between fact and fiction. MisinfoDetector is an intelligent tool designed to help users identify and flag potentially false or misleading information online.</p>
+        </div>
+        <div class="col-md-6 text-center">
+            <img src="../static/images/tt1.png" alt="AI Detection" class="about-image">
+        </div>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="row glass-box align-items-center">
+        <div class="col-md-6 order-md-2">
+            <p class="mb-0">🚨 <strong>Why Misinformation Matters</strong><br>
+                Misinformation can have serious consequences—from influencing elections to spreading dangerous health advice. MisinfoDetector empowers users to question sources and analyze content critically.</p>
+        </div>
+        <div class="col-md-6 order-md-1 text-center">
+            <img src="../static/images/tt2.png" alt="Stop Fake News" class="about-image">
+        </div>
+    </div>
+
+    <!-- Section 3 -->
+    <div class="row glass-box align-items-center">
+        <div class="col-md-6">
+            <p class="mb-0">⚙️ <strong>How It Works</strong><br>
+                Our model uses advanced NLP and machine learning to evaluate content credibility. It detects biased language, compares it to verified sources, and gives a real-time misinformation score.</p>
+        </div>
+        <div class="col-md-6 text-center">
+            <img src="../static/images/tt3.png" alt="AI Processing" class="about-image">
+        </div>
+    </div>
+
+    <!-- Section 4 -->
+    <div class="row glass-box align-items-center">
+        <div class="col-md-6 order-md-2">
+            <p class="mb-0">👥 <strong>Who Can Use It?</strong><br>
+                Whether you're a student, journalist, or casual social media user, MisinfoDetector is built for everyone to promote digital literacy and responsible content sharing.</p>
+        </div>
+        <div class="col-md-6 order-md-1 text-center">
+            <img src="../static/images/tt4.png" alt="For Everyone" class="about-image">
+        </div>
+    </div>
+
+    <!-- Section 5 -->
+    <div class="row glass-box align-items-center">
+        <div class="col-md-6">
+            <p class="mb-0">💡 <strong>Our Mission</strong><br>
+                We believe access to truthful information is a fundamental right. Our mission is to equip people with the tools they need to fight misinformation and build a safer online world.</p>
+        </div>
+        <div class="col-md-6 text-center">
+            <img src="../static/images/tt5.png" alt="Mission" class="about-image">
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+{% block title %}Contact - MisinfoDetector{% endblock %}
+{% block content %}
+<style>
+#chat-box div {
+  max-width: 75%;
+  word-wrap: break-word;
+}
+</style>
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="bg-white shadow-lg rounded-lg p-4 animate__animated animate__fadeInUp">
+
+
+      <h2 class="text-2xl font-semibold mb-4">Misinformation Detection</h2>
+
+      <!-- Chat container -->
+      <div class="d-flex flex-column bg-light border rounded p-3 mb-4" id="chat-box" style="height: 400px; overflow-y: auto;">
+        <!-- Messages will appear here -->
+      </div>
+
+      <!-- Input form -->
+      <form id="chat-form" method="POST" enctype="multipart/form-data" class="space-y-4">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label for="text-input" class="font-weight-bold">Enter Text</label>
+          <input type="text" name="text_input" id="text-input"
+                 class="form-control" placeholder="Type a message" />
+        </div>
+        
+        <div class="form-group">
+          <label for="audio-file" class="font-weight-bold">Upload File (Text, PDF, Audio)</label>
+          <input type="file" name="audio_file" id="audio-file" class="form-control-file" />
+        </div>
+        
+        <div class="form-group">
+          <label for="mic-btn" class="font-weight-bold">Or Speak Now</label><br>
+          <button type="button" id="mic-btn" class="btn btn-outline-secondary">🎤 Start</button>
+        </div>
+        
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Analyze</button>
+        </div>
+        
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script>
+    const chatBox = document.getElementById('chat-box');
+    const form = document.getElementById('chat-form');
+    const fileInput = document.getElementById('audio-file');
+    const textInput = document.getElementById('text-input');
+    const micBtn = document.getElementById('mic-btn');
+    const fileUrl = "{% url 'detect' %}"
+    let stream = null;
+    let mediaRecorder = null;
+    let chunks = [];
+
+    const appendMessage = (message, sender = "user") => {
+      const bubble = document.createElement('div');
+      bubble.className = `p-3 rounded-lg w-fit max-w-md ${sender === "user" ? "bg-blue-100 self-end ml-auto" : "bg-gray-200 self-start"}`;
+      
+      // Use innerHTML for bot messages to render <br> and <strong>
+      if (sender === "bot") {
+        bubble.innerHTML = message;
+      } else {
+        bubble.textContent = message;
+      }
+    
+      chatBox.appendChild(bubble);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    };
+    
+    const ws = new WebSocket(`ws://${window.location.host}/ws/live-transcribe/`);
+
+    ws.onopen = () => {
+      console.log("✅ WebSocket connection established");
+    };
+
+    ws.onmessage = function(event) {
+      const data = JSON.parse(event.data);
+      if (data.type === "transcription") {
+        document.getElementById("text-input").value = data.text;
+      } else if (data.type === "error") {
+        console.error("Transcription Error:", data.text);
+        alert(data.text);
+      }
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+    
+      const file = fileInput.files[0];
+      const text = textInput.value.trim();
+    
+      // Function to classify any given text (raw or transcribed)
+      async function classifyAndDisplay(textToClassify) {
+        try {
+          const response = await fetch("{% url 'classify_text' %}", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ message: textToClassify })
+          });
+    
+          const data = await response.json();
+          if (data.prediction) {
+            if (data.prediction === 'Fact') {
+              if (data.is_true !== undefined && data.confidence !== undefined && data.explanation) {
+                const factCheckMessage =
+                  `✅ Fact Check Result:\n\n` +
+                  `• Is True: ${data.is_true ? "✅ Yes" : "❌ No"}\n` +
+                  `• Confidence: ${data.confidence}%\n` +
+                  `• Explanation: ${data.explanation}`;
+              
+                appendMessage(factCheckMessage.replace(/\n/g, "<br>"), 'bot');
+              }else {
+                appendMessage(`ℹ️ Fact check details unavailable or malformed.`, 'bot');
+              }
+            } else {
+              console.log(data)
+              const factCheckMessage =
+                  `✅ Fact Check Result:\n\n` +
+                  `• Is True: ${data.is_true ? "✅ Yes" : "❌ No"}\n` +
+                  `• Confidence: ${data.confidence}%\n` +
+                  `• Explanation: ${data.explanation}`;
+              
+                appendMessage(factCheckMessage.replace(/\n/g, "<br>"), 'bot');
+            }
+          } else {
+            appendMessage(`❌ Classification error: ${data.error || "Unknown issue"}`, 'bot');
+          }
+        } catch (err) {
+          console.error("Classification error:", err);
+          appendMessage(`❌ Classification request failed`, 'bot');
+        }
+      }
+    
+      // Handle raw text input
+      if (text) {
+        appendMessage(text, "user");
+        ws.send(JSON.stringify({ type: "text", message: text }));
+        textInput.value = "";
+    
+        await classifyAndDisplay(text);
+      }
+    
+      // Handle file upload
+      if (file) {
+        appendMessage(`📎 ${file.name}`, "user");
+    
+        const formData = new FormData();
+        formData.append("audio_file", file);
+    
+        try {
+          const response = await fetch(fileUrl, {
+            method: "POST",
+            body: formData
+          });
+    
+          const data = await response.json();
+    
+          if (data.transcription) {
+            appendMessage(data.transcription, "bot");
+            await classifyAndDisplay(data.transcription);
+          } else {
+            appendMessage("❌ Transcription error: " + (data.error || "Something went wrong"), "bot");
+          }
+    
+        } catch (err) {
+          console.error("Transcription error:", err);
+          appendMessage("❌ Failed to transcribe audio", "bot");
+        }
+    
+        fileInput.value = "";
+      }
+    });
+    
+
+    micBtn.addEventListener("click", async () => {
+      if (micBtn.textContent === "🎤 Start") {
+        micBtn.textContent = "⏹ Stop";
+        appendMessage("🎤 Listening...", "user");
+
+        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream, { mimeType: "audio/webm" });
+        chunks = [];
+
+        mediaRecorder.ondataavailable = (event) => {
+          if (event.data && event.data.size > 0) {
+            chunks.push(event.data);
+          }
+        };
+
+        mediaRecorder.onstop = () => {
+          stream.getTracks().forEach(track => track.stop());
+          console.log("⛔ Recording stopped");
+
+          const audioBlob = new Blob(chunks, { type: "audio/webm" });
+          audioBlob.arrayBuffer().then(buffer => {
+            if (ws.readyState === WebSocket.OPEN) {
+              ws.send(buffer);
+              ws.send(JSON.stringify({ type: "stop" }));
+            }
+          });
+
+          mediaRecorder = null;
+          chunks = [];
+          stream = null;
+        };
+
+        mediaRecorder.start();
+      } else {
+        micBtn.textContent = "🎤 Start";
+        appendMessage("⏹ Recording stopped", "user");
+
+        if (mediaRecorder && mediaRecorder.state !== "inactive") {
+          mediaRecorder.stop();
+        }
+      }
+    });
+  </script>
+
+  {% endblock %}

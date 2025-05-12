@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %}Home - MisinfoDetector{% endblock %}
+
+{% block content %}
+<!-- Welcome Section with Blur Effect -->
+<div class="container hero-container my-5">
+    <div class="row align-items-center g-4">
+        <!-- Text Content -->
+        <div class="col-md-6">
+            <div class="jumbotron text-left animate__animated animate__fadeInDown shadow rounded">
+                <h1 class="display-4 font-weight-bold" id="hd">Welcome to MythSnare</h1>
+                <p class="lead">Cut through the noise — identify fake news, rumors, and misinformation in seconds.</p>
+                <hr class="my-4">
+                <p>Whether it's spoken, written, or shared online — analyze content with AI and stay informed.</p>
+                <a class="btn btn-primary btn-lg animate__animated animate__pulse animate__infinite" href="{% url 'detect' %}" role="button">Start Detection</a>
+            </div>
+        </div>
+
+        <!-- Image -->
+        <div class="col-md-6 d-flex justify-content-center">
+            <div class="image-container shadow rounded">
+                <img src="../static/images/test-2.png" alt="Colorful Visual" class="img-fluid rounded">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Feature Section -->
+<div class="container my-5">
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <div class="feature-box">
+                <h4>🧠 AI - Powered</h4>
+                <p>Analyze data in real-time using advanced models.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="feature-box">
+                <h4>🎙️ Voice & Text</h4>
+                <p>Submit input however you prefer — we support both.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="feature-box">
+                <h4>📊 Instant Results</h4>
+                <p>Get clarity with confidence scores & summaries.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Why We Took On This Project -->
+<div class="container mt-4">
+    <div class="container my-5">
+        <div class="feature-box p-4 rounded shadow">
+            <h4 class="mb-3">🧭<strong> Why We Took On This Project</strong></h4>
+            <p>
+                In today’s hyper-connected world, misinformation is no longer just an inconvenience — it’s a global threat. Whether it's about health, elections, education, or public policy, fake content can go viral in seconds, shaping public opinion before facts even surface.
+            </p>
+            <p>
+                <strong>We built MisinfoDetector</strong> because we believe truth shouldn’t be buried under noise. Our goal is to empower users with smart tools that help evaluate information accurately, across both voice and text inputs.
+            </p>
+            <h5 class="mt-4">📌<strong> OUR EXPERIENCE: COVID-19 Vaccine Rumor in India</strong></h5>
+            <p>
+                A viral WhatsApp message falsely claimed COVID vaccines caused infertility. The misinformation delayed immunizations, triggered fear, and caused real harm. MisinfoDetector aims to prevent such consequences with instant analysis and verification.
+            </p>
+            <p>
+                These events reinforce the urgent need for tools that detect, contextualize, and counter misinformation instantly.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

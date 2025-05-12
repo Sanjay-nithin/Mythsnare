@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Nova+Square&family=Rokkitt:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* Base Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body with responsive background and overlay */
+body {
+    background-image: url('../images/1333914.jpeg'); /* Ensure correct path */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: large;
+    color: #333;
+    position: relative;
+    animation: backgroundScroll 60s linear infinite;
+    font-family:  "Rokkitt", serif;
+}
+
+/* Optional scrolling background animation */
+@keyframes backgroundScroll {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
+}
+
+/* Apply faster animation */
+.animated-background {
+    animation: backgroundScroll 5s linear infinite; /* Decrease from 30s or 20s to 10s */
+    background-size: 200% 200%;
+}
+
+
+/* Dark overlay to improve contrast */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.3); /* Adjust darkness here */
+    z-index: -1;
+}
+
+/* Navbar styling */
+.navbar {
+    background-image: url("../images/dark-abstract-background_1048-1920.avif");  /* Light blue background */
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    font-family: "Nova Square", sans-serif;
+}
+
+/* Navbar brand styling */
+.navbar-brand {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #fff !important;
+    transition: color 0.3s ease;
+}
+
+.navbar-brand:hover {
+    color: #ffcc00 !important;
+}
+
+/* Navbar link styling */
+.nav-link {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #fff !important;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-link:hover {
+    color: #ffcc00 !important;
+    text-decoration: underline;
+    transform: scale(1.05);
+}
+
+/* Navbar collapse button */
+.navbar-toggler {
+    border-color: #dd0000;
+}
+
+.navbar-toggler-icon {
+    background-color: #6b2323;
+}
+
+/* Active nav item */
+.nav-item.active .nav-link {
+    color: #ffcc00 !important;
+    font-weight: bold;
+}
+
+/* Container with semi-transparent background */
+.container {
+    background: rgba(255, 255, 255, 0.989); /* semi-transparent */
+    backdrop-filter: blur(10px); /* blur effect */
+    -webkit-backdrop-filter: blur(10px); /* for Safari */
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgb(255, 242, 242);
+    padding: 35px;
+    margin-top: 40px;
+}
+
+.hero-container {
+    background: rgb(255, 255, 255);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgb(255, 242, 242);
+    padding: 35px;
+}
+
+
+
+/* Jumbotron tweaks */
+.jumbotron {
+    background-color: rgba(255, 255, 255, 0.92);
+    padding: 3rem 2rem;
+    border-radius: 25px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.jumbotron h1 {
+    font-size: 2.8rem;
+    font-weight: bold;
+    color: #222;
+}
+
+
+
+.btn-primary {
+    background-color: #007BFF;
+    border: none;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* Footer */
+footer {
+    background-color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    color: #555;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+}
+
+/* Feature box enhancements */
+.feature-box {
+    padding: 20px;
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.feature-box:hover {
+    transform: translateY(-5px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    .navbar-brand {
+        font-size: 1.3rem;
+    }
+
+    .nav-link {
+        font-size: 1rem;
+    }
+
+    .jumbotron h1 {
+        font-size: 2rem;
+    }
+
+    .jumbotron p.lead {
+        font-size: 1.1rem;
+    }
+
+    footer {
+        padding: 15px 10px;
+    }
+}
