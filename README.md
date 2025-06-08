@@ -59,17 +59,17 @@ pip install -r requirements.txt
 
 To use MythSnare's fact-checking capabilities via OpenRouter (LLM API), you'll need to create an API key:
 
-### 1. Sign Up & Create API Key
-- Visit [Open Router](https://openrouter.ai/keys)
-- Sign in with your account (GitHub, Google, etc.)
-- Click "Create Key" and copy the generated API key (e.g., `sk-xxxxxxxxxxxxxxxxxxxxx`)
+  #### 1. Sign Up & Create API Key
+    - Visit [Open Router](https://openrouter.ai/keys)
+    - Sign in with your account (GitHub, Google, etc.)
+    - Click "Create Key" and copy the generated API key (e.g., `sk-xxxxxxxxxxxxxxxxxxxxx`)
 
-### 2. Paste the key 
+  #### 2. Paste the key 
 
-In 'templates/' directory there is a .env file paste the key
-```bash
-OPEN_ROUTER_API_KEY=YOUR OPEN ROUTER KEY
-```
+    n 'templates/' directory there is a .env file paste the key
+    ```bash
+    OPEN_ROUTER_API_KEY=YOUR OPEN ROUTER KEY
+    ```
 
 
 
