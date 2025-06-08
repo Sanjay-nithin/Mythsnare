@@ -196,7 +196,7 @@ def classify_text(request):
 
             # Common headers and payload for LLaMA API
             headers = {
-                "Authorization": "Bearer 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",
+                "Authorization": "Bearer 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",
                 "Content-Type": "application/json"
             }
             print(label)
