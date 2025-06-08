@@ -55,9 +55,27 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 4. Run the app
+### 4. API Key Setup
+
+To use MythSnare's fact-checking capabilities via OpenRouter (LLM API), you'll need to create an API key:
+
+### 1. Sign Up & Create API Key
+- Visit [Open Router](https://openrouter.ai/keys)
+- Sign in with your account (GitHub, Google, etc.)
+- Click "Create Key" and copy the generated API key (e.g., `sk-xxxxxxxxxxxxxxxxxxxxx`)
+
+### 2. Paste the key 
+
+In 'templates/' directory there is a .env file paste the key
 ```bash
-daphne Mythsnare.asgi:application
+OPEN_ROUTER_API_KEY=YOUR OPEN ROUTER KEY
+```
+
+
+
+### 5. Run the app
+```bash
+daphne truthtell.asgi:application
 ```
 
 ## 📂 Project Structure
