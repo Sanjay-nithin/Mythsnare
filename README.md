@@ -94,8 +94,8 @@ Mythsnare/
 ```
 
 ## Future Enhancements
--Voice feedback
--Support for fake image/video detection
--Deep fake audio warnings
+- Voice feedback
+- Support for fake image/video detection
+- Deep fake audio warnings
 
 
