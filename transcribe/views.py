@@ -25,6 +25,7 @@ import urllib.parse
 import spacy
 from spacy import displacy
 import wikipedia
+from dotenv import load_dotenv
 
 # Initialize Whisper model and SpeechRecognition recognizer
 whisper_model = whisper.load_model("small")
@@ -36,6 +37,7 @@ tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 # Load spaCy model for NER (Named Entity Recognition)
 nlp = spacy.load("en_core_web_sm")
 
+load_dotenv()
 
 def register_view(request):
     if request.method == 'POST':
@@ -196,7 +198,7 @@ def classify_text(request):
 
             # Common headers and payload for LLaMA API
             headers = {
-                "Authorization": "Bearer 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",
+                "Authorization": f"Bearer {os.getenv('OPEN_ROUTER_API_KEY')}",
                 "Content-Type": "application/json"
             }
             print(label)
